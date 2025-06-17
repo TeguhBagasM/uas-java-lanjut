@@ -3,10 +3,43 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - ATK Store</title>
+        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <h1>Hello ${fullname}</h1>
-        <a href="userlist.jsp">List User</a>
+        <!-- Include Navbar -->
+        <%@ include file="../layouts/navbar.jsp" %>
+        
+        <div class="main-container">
+            <div class="welcome-section">
+                <h1 class="welcome-title">
+                    <i class="fas fa-home"></i>
+                    Selamat Datang, ${fullname}!
+                </h1>
+                <p class="welcome-text">
+                    Anda berhasil login ke sistem ATK Store. Pilih menu di bawah untuk melanjutkan.
+                </p>
+                
+                <div class="action-buttons">
+                    <a href="userlist.jsp" class="btn btn-primary btn-large">
+                        <i class="fas fa-users"></i> Kelola User
+                    </a>
+                    <a href="products.jsp" class="btn btn-primary btn-large">
+                        <i class="fas fa-box"></i> Kelola Produk
+                    </a>
+                    <a href="categories.jsp" class="btn btn-primary btn-large">
+                        <i class="fas fa-tags"></i> Kelola Kategori
+                    </a>
+                    <a href="reports.jsp" class="btn btn-primary btn-large">
+                        <i class="fas fa-chart-bar"></i> Laporan
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Include Footer -->
+        <%@ include file="../layouts/footer.jsp" %>
     </body>
 </html>

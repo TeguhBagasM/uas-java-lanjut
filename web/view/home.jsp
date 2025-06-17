@@ -1,8 +1,11 @@
 <%
-    String fullname = session.getAttribute("fullname").toString();
+    // Check if user is logged in
+    if(session.getAttribute("fullname") == null) {
+        response.sendRedirect("../auth/formlogin.jsp");
+        return;
+    }
     
-    request.setAttribute("fullname", fullname);
-    
-    RequestDispatcher dispacher = request.getRequestDispatcher("home.view.jsp");
-    dispacher.forward(request, response);
+    // Forward to view
+    RequestDispatcher dispatcher = request.getRequestDispatcher("home.view.jsp");
+    dispatcher.forward(request, response);
 %>
