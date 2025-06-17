@@ -10,14 +10,16 @@
     String username = request.getParameter("username");
     if (username != null) {
         User user = new User();
-        user.username = username; // Set username untuk metode hapus
-        boolean success = user.hapus(); // Panggil metode hapus
+        user.username = username;
+        boolean success = user.hapus();
         if (success) {
-            response.sendRedirect("userlist.jsp?message=success");
+            session.setAttribute("message", "success");
         } else {
-            response.sendRedirect("userlist.jsp?message=error");
+            session.setAttribute("message", "error");
         }
+        response.sendRedirect("userlist.jsp");
     } else {
+        session.setAttribute("message", "error");
         response.sendRedirect("userlist.jsp");
     }
 %>

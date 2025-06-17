@@ -31,7 +31,7 @@
         <div class="main-container">
             <div class="welcome-section">
                 <% if ("success".equals(message)) { %>
-                    <div class="alert alert-success">Behasil.</div>
+                    <div class="alert alert-success">Operasi User Behasil.</div>
                 <% } else if ("error".equals(message)) { %>
                     <div class="alert alert-error">Operasi gagal. Silakan coba lagi.</div>
                 <% } %>
