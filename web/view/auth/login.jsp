@@ -6,9 +6,9 @@
     User user = new User();
     if(user.login(username, password)) {
         session.setAttribute("fullname", user.getFullname());
-        response.sendRedirect("home.jsp");
+        session.setAttribute("user", user); 
+        response.sendRedirect("../view/home.jsp");
     } else {
-            response.sendRedirect("formlogin.jsp");
+        response.sendRedirect("formlogin.jsp?error=1");
     }
-
 %>
