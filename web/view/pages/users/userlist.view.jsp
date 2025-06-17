@@ -11,14 +11,18 @@
         <!-- DataTables CSS -->
         <link href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" rel="stylesheet">
         <!-- Custom CSS -->
-        <link rel="stylesheet" href="../../../css/styles.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     </head>
     <body>
         <% 
             // Validasi sesi
             if (session.getAttribute("user") == null) {
-                response.sendRedirect("../../../../view/auth/formlogin.jsp?logout=0");
+                response.sendRedirect("${pageContext.request.contextPath}/view/auth/formlogin.jsp?logout=0");
                 return;
+            }
+            String message = (String) session.getAttribute("message");
+            if (message != null) {
+                session.removeAttribute("message");
             }
         %>
         <!-- Include Navbar -->
@@ -26,10 +30,15 @@
         
         <div class="main-container">
             <div class="welcome-section">
+                <% if ("success".equals(message)) { %>
+                    <div class="alert alert-success">Behasil.</div>
+                <% } else if ("error".equals(message)) { %>
+                    <div class="alert alert-error">Operasi gagal. Silakan coba lagi.</div>
+                <% } %>
                 <h1 class="welcome-title mb-2">
                     <i class="fas fa-home"></i> User Lists
                 </h1>
-                <a href="formusertambah.jsp" class="btn btn-primary mb-2">
+                <a href="${pageContext.request.contextPath}/view/pages/users/formusertambah.jsp" class="btn btn-primary mb-2">
                     <i class="fas fa-plus"></i> Tambah User Baru
                 </a>
 
@@ -49,11 +58,11 @@
                                 <td>${user.fullname}</td>
                                 <td>${user.username}</td>
                                 <td>
-                                    <a href="formuseredit.jsp?username=${user.username}" class="btn btn-warning">
+                                    <a href="${pageContext.request.contextPath}/view/pages/users/formuseredit.jsp?username=${user.username}" class="btn btn-warning">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
-                                    <a href="deleteuser.jsp?username=${user.username}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus user ini?')">
-                                        <i class="fas fa-trash"></i> Hapus
+                                    <a href="${pageContext.request.contextPath}/view/pages/users/deleteuser.jsp?username=${user.username}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus user ini?')">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -80,7 +89,7 @@
                     "info": true,
                     "lengthChange": true,
                     "autoWidth": false,
-                    "responsive": false, // Non-responsif seperti diminta
+                    "responsive": false,
                     "language": {
                         "search": "Cari:",
                         "lengthMenu": "Tampilkan _MENU_ data",

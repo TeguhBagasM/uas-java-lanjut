@@ -7,7 +7,11 @@
     User user = new User();
     user.username = username;
     user.fullname = fullname;
-    user.tambah(password);
+    boolean success = user.tambah(password);
     
-    response.sendRedirect("userlist.jsp");
+    if (success) {
+            response.sendRedirect("userlist.jsp?message=success");
+        } else {
+            response.sendRedirect("userlist.jsp?message=error");
+        }
 %>
