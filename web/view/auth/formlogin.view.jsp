@@ -9,9 +9,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <!-- Include Navbar -->
-        <%@ include file="../layouts/navbar.jsp" %>
-        
         <div class="main-container">
             <div class="form-container">
                 <h2 class="form-title">
@@ -50,15 +47,8 @@
                         <i class="fas fa-sign-in-alt"></i> Login
                     </button>
                 </form>
-                
-                <div class="text-center mt-2">
-                    <p>Belum punya akun? <a href="register.jsp">Daftar di sini</a></p>
-                    <p><a href="../index.jsp">Kembali ke Beranda</a></p>
-                </div>
             </div>
         </div>
         
-        <!-- Include Footer -->
-        <%@ include file="../layouts/footer.jsp" %>
     </body>
 </html>
