@@ -10,7 +10,7 @@
     </head>
     <body>
         <!-- Include Navbar -->
-        <%@ include file="../layouts/navbar.jsp" %>
+        <%@ include file="layouts/navbar.jsp" %>
         
         <div class="main-container">
             <div class="welcome-section">
@@ -40,6 +40,6 @@
         </div>
         
         <!-- Include Footer -->
-        <%@ include file="../layouts/footer.jsp" %>
+        <%@ include file="layouts/footer.jsp" %>
     </body>
 </html>
