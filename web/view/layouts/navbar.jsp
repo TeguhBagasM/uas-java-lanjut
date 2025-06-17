@@ -7,7 +7,7 @@
         
         <div class="nav-menu" id="nav-menu">
             <a href="index.jsp" class="nav-link">Home</a>
-            <a href="products.jsp" class="nav-link">Produk</a>
+            <a href="view/pages/users/userlist.jsp" class="nav-link">Users</a>
             <a href="categories.jsp" class="nav-link">Kategori</a>
             <a href="about.jsp" class="nav-link">Tentang</a>
             <a href="contact.jsp" class="nav-link">Kontak</a>
