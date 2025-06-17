@@ -53,7 +53,7 @@
                 
                 <div class="text-center mt-2">
                     <p>Belum punya akun? <a href="register.jsp">Daftar di sini</a></p>
-                    <p><a href="../view/index.jsp">Kembali ke Beranda</a></p>
+                    <p><a href="../index.jsp">Kembali ke Beranda</a></p>
                 </div>
             </div>
         </div>

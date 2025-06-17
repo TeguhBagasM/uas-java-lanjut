@@ -1,4 +1,4 @@
 <%
-    RequestDispatcher dispacher = request.getRequestDispatcher("formlogin.view.jsp");
-    dispacher.forward(request, response);
+    RequestDispatcher dispatcher = request.getRequestDispatcher("formlogin.view.jsp");
+    dispatcher.forward(request, response);
 %>

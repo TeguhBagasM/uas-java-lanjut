@@ -5,12 +5,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Dashboard - ATK Store</title>
-        <link rel="stylesheet" href="../css/styles.css">
+        <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
         <!-- Include Navbar -->
-        <%@ include file="layouts/navbar.jsp" %>
+        <%@ include file="view/layouts/navbar.jsp" %>
         
         <div class="main-container">
             <div class="welcome-section">
@@ -40,6 +40,6 @@
         </div>
         
         <!-- Include Footer -->
-        <%@ include file="layouts/footer.jsp" %>
+        <%@ include file="view/layouts/footer.jsp" %>
     </body>
 </html>

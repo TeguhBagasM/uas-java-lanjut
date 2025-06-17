@@ -1,7 +1,7 @@
 <%
-    if(session.getAttribute("fullname") == null) {
-        response.sendRedirect("../auth/formlogin.jsp");
-    } else {
-        response.sendRedirect("home.jsp");
-    }
+    // Invalidate session
+    session.invalidate();
+    
+    // Redirect to login page with success message
+    response.sendRedirect("formlogin.jsp?logout=1");
 %>
