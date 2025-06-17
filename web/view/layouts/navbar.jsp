@@ -24,7 +24,7 @@
                     <a href="view/auth/logout.jsp" class="btn btn-outline">Logout</a>
                 </div>
             <% } else { %>
-                <a href="view/auth/formlogin.jsp" class="btn btn-primary">Login</a>
+                <a href="../auth/formlogin.jsp" class="btn btn-primary">Login</a>
             <% } %>
         </div>
         

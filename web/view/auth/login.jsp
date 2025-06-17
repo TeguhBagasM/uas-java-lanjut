@@ -7,7 +7,7 @@
     if(user.login(username, password)) {
         session.setAttribute("fullname", user.getFullname());
         session.setAttribute("user", user);     
-        response.sendRedirect("../home.jsp");
+        response.sendRedirect("../../home.jsp");
     } else {
         response.sendRedirect("formlogin.jsp?error=1");
     }
