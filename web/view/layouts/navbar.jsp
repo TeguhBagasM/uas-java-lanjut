@@ -21,10 +21,10 @@
             <% if (session.getAttribute("user") != null) { %>
                 <div class="user-menu">
                     <span class="user-name">Hi, ${sessionScope.fullname}</span>
-                    <a href="view/auth/logout.jsp" class="btn btn-outline">Logout</a>
+                    <a href="${pageContext.request.contextPath}/view/auth/logout.jsp" class="btn btn-outline">Logout</a>
                 </div>
             <% } else { %>
-                <a href="view/auth/formlogin.jsp" class="btn btn-primary">Login</a>
+                <a href="${pageContext.request.contextPath}/view/auth/formlogin.jsp" class="btn btn-primary">Login</a>
             <% } %>
         </div>
         

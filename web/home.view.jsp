@@ -23,11 +23,11 @@
                 </p>
                 
                 <div class="action-buttons">
-                    <a href="userlist.jsp" class="btn btn-primary btn-large">
+                    <a href="${pageContext.request.contextPath}/view/pages/users/userlist.jsp" class="btn btn-primary btn-large">
                         <i class="fas fa-users"></i> Kelola User
                     </a>
-                    <a href="products.jsp" class="btn btn-primary btn-large">
-                        <i class="fas fa-box"></i> Kelola Produk
+                    <a href="${pageContext.request.contextPath}/view/pages/barang/baranglist.jsp" class="btn btn-primary btn-large">
+                        <i class="fas fa-box"></i> Kelola Barang
                     </a>
                     <a href="categories.jsp" class="btn btn-primary btn-large">
                         <i class="fas fa-tags"></i> Kelola Kategori
