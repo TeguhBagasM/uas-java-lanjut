@@ -22,10 +22,6 @@
                 <h2 class="form-title">Tambah Barang</h2>
                 <form action="${pageContext.request.contextPath}/view/pages/barang/barangtambah.jsp" method="post">
                     <div class="form-group">
-                        <label for="id">ID</label>
-                        <input type="text" id="id" name="id" class="form-control" required>
-                    </div>
-                    <div class="form-group">
                         <label for="nama">Nama</label>
                         <input type="text" id="nama" name="nama" class="form-control" required>
                     </div>

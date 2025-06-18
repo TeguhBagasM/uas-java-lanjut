@@ -1,17 +1,24 @@
-<%-- 
-    Document   : deletebarang
-    Created on : Jun 18, 2025, 6:08:55 AM
-    Author     : user
---%>
-
+<%@page import="tokoatk.Barang"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%
+    if (session.getAttribute("user") == null) {
+        response.sendRedirect("${pageContext.request.contextPath}/view/auth/formlogin.jsp?logout=0");
+        return;
+    }
+
+    String id = request.getParameter("id");
+    if (id != null) {
+        Barang barang = new Barang();
+        barang.setId(id);
+        boolean success = barang.hapus();
+        if (success) {
+            session.setAttribute("message", "success");
+        } else {
+            session.setAttribute("message", "error");
+        }
+        response.sendRedirect("baranglist.jsp");
+    } else {
+        session.setAttribute("message", "error");
+        response.sendRedirect("baranglist.jsp");
+    }
+%>

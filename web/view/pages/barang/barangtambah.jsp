@@ -6,15 +6,13 @@
         return;
     }
 
-    String id = request.getParameter("id");
     String nama = request.getParameter("nama");
     String jenis = request.getParameter("jenis");
     String hargaStr = request.getParameter("harga");
     Integer harga = hargaStr != null ? Integer.parseInt(hargaStr) : 0;
 
-    if (id != null && nama != null && jenis != null) {
+    if (nama != null && jenis != null) {
         Barang barang = new Barang();
-        barang.setId(id);
         barang.setNama(nama);
         barang.setJenis(jenis);
         barang.setHarga(harga);
@@ -24,9 +22,9 @@
         } else {
             session.setAttribute("message", "error");
         }
-        response.sendRedirect("${pageContext.request.contextPath}/view/pages/barang/baranglist.jsp");
+        response.sendRedirect("baranglist.jsp");
     } else {
         session.setAttribute("message", "error");
-        response.sendRedirect("${pageContext.request.contextPath}/view/pages/barang/baranglist.jsp");
+        response.sendRedirect("baranglist.jsp");
     }
 %>
