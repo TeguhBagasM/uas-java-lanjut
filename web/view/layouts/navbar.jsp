@@ -13,10 +13,6 @@
         </div>
         
         <div class="nav-actions">
-            <a href="cart.jsp" class="nav-icon">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
-            </a>
             <% if (session.getAttribute("user") != null) { %>
                 <div class="user-menu">
                     <span class="user-name">Hi, ${sessionScope.fullname}</span>

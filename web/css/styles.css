@@ -152,6 +152,20 @@ body {
     background: #e03e4c;
 }
 
+/*.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.detail-table th, .detail-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.detail-table th {
+    background-color: #f2f2f2;
+}*/
+
 /* DataTables Overrides */
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter {
