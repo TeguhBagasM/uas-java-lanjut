@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
-        <!-- Include Navbar -->
         <%@ include file="view/layouts/navbar.jsp" %>
         
         <div class="main-container">
@@ -39,7 +38,6 @@
             </div>
         </div>
         
-        <!-- Include Footer -->
         <%@ include file="view/layouts/footer.jsp" %>
     </body>
 </html>

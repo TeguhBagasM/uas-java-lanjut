@@ -9,8 +9,7 @@
             <a href="${pageContext.request.contextPath}/index.jsp" class="nav-link">Home</a>
             <a href="${pageContext.request.contextPath}/view/pages/users/userlist.jsp" class="nav-link">Users</a>
             <a href="${pageContext.request.contextPath}/view/pages/barang/baranglist.jsp" class="nav-link">Barang</a>
-            <a href="${pageContext.request.contextPath}/about.jsp" class="nav-link">Tentang</a>
-            <a href="${pageContext.request.contextPath}/contact.jsp" class="nav-link">Kontak</a>
+            <a href="${pageContext.request.contextPath}/view/pages/sales/stocklist.jsp" class="nav-link">Sales</a>
         </div>
         
         <div class="nav-actions">
