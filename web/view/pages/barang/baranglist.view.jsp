@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard - ATK Store</title>
+        <title>Barang List - ATK Store</title>
         <!-- FontAwesome CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <!-- DataTables CSS -->
@@ -15,7 +15,6 @@
     </head>
     <body>
         <% 
-            // Validasi sesi
             if (session.getAttribute("user") == null) {
                 response.sendRedirect("${pageContext.request.contextPath}/view/auth/formlogin.jsp?logout=0");
                 return;
@@ -25,43 +24,46 @@
                 session.removeAttribute("message");
             }
         %>
-        <!-- Include Navbar -->
         <%@ include file="../../layouts/navbar.jsp" %>
         
         <div class="main-container">
             <div class="welcome-section">
                 <% if ("success".equals(message)) { %>
-                    <div class="alert alert-success">Operasi User Behasil.</div>
+                    <div class="alert alert-success">Operasi berhasil (Tambah/Edit/Hapus).</div>
                 <% } else if ("error".equals(message)) { %>
                     <div class="alert alert-error">Operasi gagal. Silakan coba lagi.</div>
                 <% } %>
                 <h1 class="welcome-title mb-2">
-                    <i class="fas fa-users"></i> User Lists
+                    <i class="fas fa-box"></i> Barang Lists
                 </h1>
-                <a href="${pageContext.request.contextPath}/view/pages/users/formusertambah.jsp" class="btn btn-primary mb-2">
-                    <i class="fas fa-plus"></i> Tambah User Baru
+                <a href="${pageContext.request.contextPath}/view/pages/barang/formbarangtambah.jsp" class="btn btn-primary mb-2">
+                    <i class="fas fa-plus"></i> Tambah Barang Baru
                 </a>
 
-                <table id="userTable" class="table">
+                <table id="barangTable" class="table">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Fullname</th>
-                            <th>Username</th>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Jenis</th>
+                            <th>Harga</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user" items="${list}" varStatus="loop">
+                        <c:forEach var="barang" items="${list}" varStatus="loop">
                             <tr>
                                 <td>${loop.count}</td>
-                                <td>${user.fullname}</td>
-                                <td>${user.username}</td>
+                                <td>${barang.id}</td>
+                                <td>${barang.nama}</td>
+                                <td>${barang.jenis}</td>
+                                <td>${barang.harga}</td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/view/pages/users/formuseredit.jsp?username=${user.username}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit
+                                    <a href="${pageContext.request.contextPath}/view/pages/barang/formbarangedit.jsp?id=${barang.id}" class="btn btn-warning">
+                                        <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="${pageContext.request.contextPath}/view/pages/users/deleteuser.jsp?username=${user.username}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus user ini?')">
+                                    <a href="${pageContext.request.contextPath}/view/pages/barang/deletebarang.jsp?id=${barang.id}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus barang ini?')">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
@@ -72,17 +74,13 @@
             </div>
         </div>
 
-        <!-- Include Footer -->
         <%@ include file="../../layouts/footer.jsp" %>
 
-        <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <!-- DataTables JS -->
         <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-        <!-- Initialize DataTables -->
         <script>
             $(document).ready(function() {
-                $('#userTable').DataTable({
+                $('#barangTable').DataTable({
                     "paging": true,
                     "searching": true,
                     "ordering": true,

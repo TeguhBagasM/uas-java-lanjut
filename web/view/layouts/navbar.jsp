@@ -6,11 +6,11 @@
         </a>
         
         <div class="nav-menu" id="nav-menu">
-            <a href="index.jsp" class="nav-link">Home</a>
-            <a href="view/pages/users/userlist.jsp" class="nav-link">Users</a>
-            <a href="categories.jsp" class="nav-link">Kategori</a>
-            <a href="about.jsp" class="nav-link">Tentang</a>
-            <a href="contact.jsp" class="nav-link">Kontak</a>
+            <a href="${pageContext.request.contextPath}/index.jsp" class="nav-link">Home</a>
+            <a href="${pageContext.request.contextPath}/view/pages/users/userlist.jsp" class="nav-link">Users</a>
+            <a href="${pageContext.request.contextPath}/view/pages/barang/baranglist.jsp" class="nav-link">Barang</a>
+            <a href="${pageContext.request.contextPath}/about.jsp" class="nav-link">Tentang</a>
+            <a href="${pageContext.request.contextPath}/contact.jsp" class="nav-link">Kontak</a>
         </div>
         
         <div class="nav-actions">
