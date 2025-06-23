@@ -108,20 +108,29 @@
                     $.ajax({
                         url: "${pageContext.request.contextPath}/view/pages/barang/api.baranggantinama.jsp",
                         method: "POST",
-                        data: { id: id, namabaru: namabaru },
+                        data: { 
+                            id: id, 
+                            namabaru: namabaru 
+                        },
                         dataType: "text",
                         success: function(result) {
-                            console.log("Raw response:", result); // Debug log
+                            console.log("Response:", result);
+
                             if (result.trim() === "ok") {
                                 $('#nama' + id).html(namabaru);
                                 alert("Nama barang berhasil diubah!");
                             } else {
-                                alert("Gagal mengubah nama barang! Response: " + result);
+                                alert("Gagal mengubah nama barang!\nDetail: " + result);
                             }
                         },
                         error: function(xhr, status, error) {
-                            console.log("Full error:", xhr.responseText); // Debug log
-                            alert("Error: " + error + "\nStatus: " + status + "\nResponse: " + xhr.responseText);
+                            console.log("Ajax Error:", {
+                                status: status,
+                                error: error,
+                                responseText: xhr.responseText,
+                                statusCode: xhr.status
+                            });
+                            alert("Error " + xhr.status + ": " + error + "\nResponse: " + xhr.responseText);
                         }
                     });
                 }
@@ -131,18 +140,28 @@
                 $.ajax({
                     url: "${pageContext.request.contextPath}/view/pages/barang/api.barangstat.jsp",
                     method: "POST",
-                    dataType: "json", // Explicitly expect JSON
+                    dataType: "json",
                     success: function(result) {
-                        console.log("Stat response:", result); // Debug log
+                        console.log("Stat response:", result);
+
                         if (result.error) {
                             alert("Error: " + result.error);
                         } else {
-                            alert("Banyak data: " + result.banyak + "\nRata-rata: " + result.rata2.toFixed(2));
+                            alert("Statistik Barang:\n" +
+                                  "Banyak data: " + result.banyak + " item\n" +
+                                  "Rata-rata harga: Rp " + result.rata2.toLocaleString('id-ID', {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                  }));
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.log("Raw response:", xhr.responseText); // Debug log
-                        alert("Error: " + error + "\nStatus: " + status + "\nResponse: " + xhr.responseText);
+                        console.log("Stat Error:", {
+                            status: status,
+                            error: error,
+                            responseText: xhr.responseText
+                        });
+                        alert("Error mengambil statistik: " + error);
                     }
                 });
             }

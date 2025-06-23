@@ -12,15 +12,11 @@
                 out.print("ok");
             } else {
                 out.print("fail");
-                // Tambahkan logging untuk debug
-                System.out.println("Update gagal untuk id: " + id);
             }
         } else {
             out.print("fail");
-            System.out.println("Baca gagal untuk id: " + id);
         }
     } else {
         out.print("fail");
-        System.out.println("Parameter id atau namabaru null/empty");
     }
 %>
