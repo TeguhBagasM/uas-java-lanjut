@@ -7,11 +7,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Barang List - ATK Store</title>
-        <!-- FontAwesome CSS -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-        <!-- DataTables CSS -->
         <link href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css" rel="stylesheet">
-        <!-- Custom CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     </head>
     <body>
@@ -108,29 +105,46 @@
             function gantiNama(id, namaLama) {
                 let namabaru = prompt("Edit nama barang? (Sekarang: " + namaLama + ")", namaLama);
                 if (namabaru && namabaru !== namaLama) {
-                    $.post("${pageContext.request.contextPath}/view/pages/barang/api.baranggantinama.jsp", 
-                          { id: id, namabaru: namabaru }, 
-                          function(result) {
-                              if (result === "ok") {
-                                  $('#nama' + id).html(namabaru);
-                                  alert("Nama barang berhasil diubah!");
-                              } else {
-                                  alert("Gagal mengubah nama barang!");
-                              }
-                          }).fail(function() {
-                              alert("Error: Tidak dapat terhubung ke server!");
-                          });
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/view/pages/barang/api.baranggantinama.jsp",
+                        method: "POST",
+                        data: { id: id, namabaru: namabaru },
+                        dataType: "text",
+                        success: function(result) {
+                            console.log("Raw response:", result); // Debug log
+                            if (result.trim() === "ok") {
+                                $('#nama' + id).html(namabaru);
+                                alert("Nama barang berhasil diubah!");
+                            } else {
+                                alert("Gagal mengubah nama barang! Response: " + result);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("Full error:", xhr.responseText); // Debug log
+                            alert("Error: " + error + "\nStatus: " + status + "\nResponse: " + xhr.responseText);
+                        }
+                    });
                 }
             }
 
             function showStat() {
-                $.post("${pageContext.request.contextPath}/view/pages/barang/api.barangstat.jsp", 
-                      function(result) {
-                          let obj = JSON.parse(result);
-                          alert("Banyak data: " + obj.banyak + "\nRata-rata: " + obj.rata2);
-                      }).fail(function() {
-                          alert("Error: Tidak dapat mengambil statistik!");
-                      });
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/view/pages/barang/api.barangstat.jsp",
+                    method: "POST",
+                    dataType: "json", // Explicitly expect JSON
+                    success: function(result) {
+                        console.log("Stat response:", result); // Debug log
+                        if (result.error) {
+                            alert("Error: " + result.error);
+                        } else {
+                            alert("Banyak data: " + result.banyak + "\nRata-rata: " + result.rata2.toFixed(2));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Raw response:", xhr.responseText); // Debug log
+                        alert("Error: " + error + "\nStatus: " + status + "\nResponse: " + xhr.responseText);
+                    }
+                });
             }
         </script>
     </body>
