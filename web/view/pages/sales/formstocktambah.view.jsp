@@ -9,6 +9,24 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                var hargaMap = {
+                    <c:forEach var="barang" items="${barangList}" varStatus="status">
+                        "${barang.id}": ${barang.harga}<c:if test="${!status.last}">,</c:if>
+                    </c:forEach>
+                };
+
+                $("#barangId").change(function() {
+                    var selectedBarangId = $(this).val();
+                    if (selectedBarangId && hargaMap[selectedBarangId]) {
+                        $("#harga").val(hargaMap[selectedBarangId]);
+                    } else {
+                        $("#harga").val("");
+                    }
+                });
+            });
+        </script>
         <style>
             .detail-table {
                 width: 100%;
@@ -23,65 +41,7 @@
             .detail-table th {
                 background-color: #f2f2f2;
             }
-            .autocomplete-suggestions {
-                border: 1px solid #ddd;
-                background-color: #fff;
-                max-height: 150px;
-                overflow-y: auto;
-                position: absolute;
-                z-index: 1000;
-            }
-            .autocomplete-suggestion {
-                padding: 5px;
-                cursor: pointer;
-            }
-            .autocomplete-suggestion:hover {
-                background-color: #f0f0f0;
-            }
         </style>
-        <script>
-            $(document).ready(function() {
-                // Map nama barang ke id dan harga berdasarkan data dari JSP
-                var barangData = {
-                    <c:forEach var="barang" items="${barangList}" varStatus="status">
-                        "${barang.nama}": { id: "${barang.id}", harga: ${barang.harga} }<c:if test="${!status.last}">,</c:if>
-                    </c:forEach>
-                };
-
-                var $input = $("#namaBarang");
-                var $suggestions = $("<div class='autocomplete-suggestions'></div>").insertAfter($input);
-
-                $input.on("input", function() {
-                    var query = $(this).val().toLowerCase();
-                    $suggestions.empty();
-
-                    if (query.length > 0) {
-                        $.each(barangData, function(nama, data) {
-                            if (nama.toLowerCase().includes(query)) {
-                                var $suggestion = $("<div class='autocomplete-suggestion'>" + nama + "</div>");
-                                $suggestion.data("id", data.id);
-                                $suggestion.data("harga", data.harga);
-                                $suggestion.appendTo($suggestions);
-                            }
-                        });
-                    }
-                });
-
-                $suggestions.on("click", ".autocomplete-suggestion", function() {
-                    var $this = $(this);
-                    $input.val($this.text());
-                    $("#barangId").val($this.data("id"));
-                    $("#harga").val($this.data("harga"));
-                    $suggestions.empty();
-                });
-
-                $(document).on("click", function(e) {
-                    if (!$(e.target).closest(".form-group").length) {
-                        $suggestions.empty();
-                    }
-                });
-            });
-        </script>
     </head>
     <body>
         <% 
@@ -107,6 +67,8 @@
                 <table class="detail-table">
                     <thead>
                         <tr>
+                            <th>ID</th>
+                            <th>Barang ID</th>
                             <th>Nama Barang</th>
                             <th>Qty</th>
                             <th>Harga</th>
@@ -116,6 +78,8 @@
                     <tbody>
                         <c:forEach var="row" items="${sales.getDetail()}">
                             <tr>
+                                <td>${row.id}</td>
+                                <td>${row.barangId}</td>
                                 <td>${row.getBarangNama()}</td>
                                 <td>${row.qty}</td>
                                 <td>${row.harga}</td>
@@ -127,10 +91,14 @@
                 
                 <form action="${pageContext.request.contextPath}/view/pages/sales/stocktambah.jsp" method="post">
                     <input type="hidden" name="salesId" value="${sales.id}">
-                    <input type="hidden" id="barangId" name="barangId">
                     <div class="form-group">
-                        <label for="namaBarang">Nama Barang</label>
-                        <input type="text" id="namaBarang" class="form-control" required placeholder="Ketik untuk mencari...">
+                        <label for="barangId">Barang ID</label>
+                        <select id="barangId" name="barangId" class="form-control" required>
+                            <option value="">Pilih Barang</option>
+                            <c:forEach var="barang" items="${barangList}">
+                                <option value="${barang.id}">${barang.nama} - ${barang.harga}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="qty">Qty</label>
@@ -141,7 +109,7 @@
                         <input type="number" id="harga" name="harga" class="form-control" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Tambah Transaksi
+                        <i class="fas fa-plus"></i> Tambah Detail
                     </button>
                     <a href="${pageContext.request.contextPath}/view/pages/sales/stocklist.jsp" class="btn btn-outline">Kembali</a>
                 </form>

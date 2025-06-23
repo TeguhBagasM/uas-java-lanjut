@@ -55,15 +55,15 @@ public class Barang {
 
         try {
             conn = DbConnection.connect();
-            String sql = "UPDATE barang SET nama=?, jenis=?, harga=? WHERE id=?";
+            String sql = "UPDATE barang SET nama=?, harga=? WHERE id=?";
             st = conn.prepareStatement(sql);
             st.setString(1, this.nama);
-            st.setString(2, this.jenis);
-            st.setInt(3, this.harga != null ? this.harga : 0);
-            st.setString(4, this.id);
+            st.setInt(2, this.harga != null ? this.harga : 0);
+            st.setString(3, this.id);
             int rowsAffected = st.executeUpdate();
             return rowsAffected > 0;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return false;
         } finally {
             try { if (st != null) st.close(); if (conn != null) conn.close(); } catch (Exception e) {}

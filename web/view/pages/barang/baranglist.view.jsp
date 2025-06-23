@@ -1,5 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,13 +57,13 @@
                             <tr>
                                 <td>${loop.count}</td>
                                 <td>${barang.id}</td>
-                                <td>${barang.nama}</td>
+                                <td><span id="nama${barang.id}">${barang.nama}</span></td>
                                 <td>${barang.jenis}</td>
-                                <td>${barang.harga}</td>
+                                <td><fmt:formatNumber type="number" pattern="0,000" value="${barang.harga}" /></td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/view/pages/barang/formbarangedit.jsp?id=${barang.id}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    <button type="button" onclick="gantiNama('${barang.id}', '${barang.nama}')" class="btn btn-primary">
+                                        <i class="fas fa-edit"></i> Edit Nama
+                                    </button>
                                     <a href="${pageContext.request.contextPath}/view/pages/barang/deletebarang.jsp?id=${barang.id}" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus barang ini?')">
                                         <i class="fas fa-trash"></i>
                                     </a>
@@ -71,6 +72,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                <button type="button" onclick="showStat()" class="btn btn-primary">Show Stat</button>
             </div>
         </div>
 
@@ -102,6 +104,34 @@
                     }
                 });
             });
+
+            function gantiNama(id, namaLama) {
+                let namabaru = prompt("Edit nama barang? (Sekarang: " + namaLama + ")", namaLama);
+                if (namabaru && namabaru !== namaLama) {
+                    $.post("${pageContext.request.contextPath}/view/pages/barang/api.baranggantinama.jsp", 
+                          { id: id, namabaru: namabaru }, 
+                          function(result) {
+                              if (result === "ok") {
+                                  $('#nama' + id).html(namabaru);
+                                  alert("Nama barang berhasil diubah!");
+                              } else {
+                                  alert("Gagal mengubah nama barang!");
+                              }
+                          }).fail(function() {
+                              alert("Error: Tidak dapat terhubung ke server!");
+                          });
+                }
+            }
+
+            function showStat() {
+                $.post("${pageContext.request.contextPath}/view/pages/barang/api.barangstat.jsp", 
+                      function(result) {
+                          let obj = JSON.parse(result);
+                          alert("Banyak data: " + obj.banyak + "\nRata-rata: " + obj.rata2);
+                      }).fail(function() {
+                          alert("Error: Tidak dapat mengambil statistik!");
+                      });
+            }
         </script>
     </body>
 </html>
