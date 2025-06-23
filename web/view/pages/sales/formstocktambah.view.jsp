@@ -46,7 +46,6 @@
         </style>
         <script>
             $(document).ready(function() {
-                // Map nama barang ke id dan harga berdasarkan data dari JSP
                 var barangData = {
                     <c:forEach var="barang" items="${barangList}" varStatus="status">
                         "${barang.nama}": { id: "${barang.id}", harga: ${barang.harga} }<c:if test="${!status.last}">,</c:if>
@@ -86,7 +85,6 @@
                     }
                 });
 
-                // Tombol Hitung Total
                 $("#calculateTotal").on("click", function() {
                     var salesId = "${sales.id}";
                     if (salesId) {
