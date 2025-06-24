@@ -38,13 +38,25 @@
             .autocomplete-suggestion:hover {
                 background-color: #f0f0f0;
             }
-            #totalResult {
-                margin-top: 10px;
-                font-weight: bold;
-                color: #28a745;
-            }
         </style>
         <script>
+            // Fungsi untuk memformat angka ke Rupiah
+            function formatRupiah(angka) {
+                var number_string = angka.toString().replace(/[^,\d]/g, ''),
+                    split = number_string.split(','),
+                    sisa = split[0].length % 3,
+                    rupiah = split[0].substr(0, sisa),
+                    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+                return 'Rp ' + rupiah;
+            }
+
             $(document).ready(function() {
                 var barangData = {
                     <c:forEach var="barang" items="${barangList}" varStatus="status">
@@ -62,7 +74,7 @@
                     if (query.length > 0) {
                         $.each(barangData, function(nama, data) {
                             if (nama.toLowerCase().includes(query)) {
-                                var $suggestion = $("<div class='autocomplete-suggestion'>" + nama + "</div>");
+                                var $suggestion = $("<div class='autocomplete-suggestion'>" + nama + " (" + formatRupiah(data.harga) + ")</div>");
                                 $suggestion.data("id", data.id);
                                 $suggestion.data("harga", data.harga);
                                 $suggestion.appendTo($suggestions);
@@ -73,9 +85,9 @@
 
                 $suggestions.on("click", ".autocomplete-suggestion", function() {
                     var $this = $(this);
-                    $input.val($this.text());
+                    $input.val($this.text().split(' (')[0]); // Ambil nama barang tanpa harga
                     $("#barangId").val($this.data("id"));
-                    $("#harga").val($this.data("harga"));
+                    $("#harga").val(formatRupiah($this.data("harga")));
                     $suggestions.empty();
                 });
 
@@ -91,12 +103,12 @@
                         $.post("${pageContext.request.contextPath}/view/pages/sales/api.salestotal.jsp", 
                               { salesId: salesId }, 
                               function(result) {
-                                  $("#totalResult").html("Total Keseluruhan: " + (result || "0"));
+                                  alert("Total Keseluruhan: " + formatRupiah(result || "0"));
                               }).fail(function(xhr, status, error) {
-                                  $("#totalResult").html("Error: " + error + ". Periksa log server.");
+                                  alert("Error: " + error + ". Periksa log server.");
                               });
                     } else {
-                        $("#totalResult").html("Error: Sales ID tidak tersedia.");
+                        alert("Error: Sales ID tidak tersedia.");
                     }
                 });
             });
@@ -137,8 +149,8 @@
                             <tr>
                                 <td>${row.getBarangNama()}</td>
                                 <td>${row.qty}</td>
-                                <td>${row.harga}</td>
-                                <td>${row.total}</td>
+                                <td><script>document.write(formatRupiah(${row.harga}));</script></td>
+                                <td><script>document.write(formatRupiah(${row.total}));</script></td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -157,7 +169,7 @@
                     </div>
                     <div class="form-group">
                         <label for="harga">Harga</label>
-                        <input type="number" id="harga" name="harga" class="form-control" readonly>
+                        <input type="text" id="harga" name="harga" class="form-control" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-plus"></i> Tambah Transaksi
@@ -167,7 +179,6 @@
                         <i class="fas fa-calculator"></i> Hitung Total
                     </button>
                 </form>
-                <div id="totalResult"></div>
             </div>
         </div>
 

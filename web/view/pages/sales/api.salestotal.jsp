@@ -1,49 +1,55 @@
-<%@page import="tokoatk.Sales"%>
-<%@page import="tokoatk.SalesDetail"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.io.*"%>
+<%@page import="tokoatk.DbConnection"%>
 <%@page contentType="text/plain" pageEncoding="UTF-8"%>
-<%@page errorPage="error.jsp" %>
 <%
     String salesId = request.getParameter("salesId");
-    System.out.println("Menerima salesId: " + salesId + " pada " + new java.util.Date());
-
     if (salesId == null || salesId.trim().isEmpty()) {
-        System.out.println("salesId null atau kosong");
         out.print("0");
         return;
     }
-
-    Sales sales = new Sales();
+    
+    salesId = salesId.trim(); // Bersihkan whitespace
+    Connection conn = null;
+    PreparedStatement st = null;
+    ResultSet rs = null;
+    
     try {
-        if (sales.baca(salesId)) {
-            System.out.println("Sales ditemukan untuk ID: " + salesId);
-            ArrayList<SalesDetail> details = sales.getDetail();
-            int total = 0;
-            if (details != null) {
-                System.out.println("Jumlah detail: " + details.size());
-                for (SalesDetail detail : details) {
-                    if (detail != null) {
-                        int qty = (detail.getQty() != null) ? detail.getQty() : 0;
-                        int harga = (detail.getHarga() != null) ? detail.getHarga() : 0;
-                        int itemTotal = qty * harga;
-                        total += itemTotal;
-                        System.out.println("Detail - qty: " + qty + ", harga: " + harga + ", total: " + itemTotal);
-                    } else {
-                        System.out.println("Detail null untuk salesId: " + salesId);
-                    }
-                }
-            } else {
-                System.out.println("Detail list null untuk salesId: " + salesId);
-            }
-            System.out.println("Total akhir: " + total);
-            out.print(total);
-        } else {
-            System.out.println("Sales tidak ditemukan untuk ID: " + salesId);
-            out.print("0");
+        conn = DbConnection.connect();
+        if (conn == null) {
+            out.print("ERROR: Koneksi database gagal");
+            return;
         }
+        
+        String sql = "SELECT qty, harga FROM salesd WHERE salesId = ?";
+        st = conn.prepareStatement(sql);
+        st.setString(1, salesId);
+        rs = st.executeQuery();
+        
+        int total = 0;
+        int count = 0;
+        
+        while (rs.next()) {
+            int qty = rs.getInt("qty");
+            int harga = rs.getInt("harga");
+            int subtotal = qty * harga;
+            total += subtotal;
+            count++;
+        }
+        
+        out.print(total);
+        
+    } catch (SQLException e) {
+        out.print("ERROR: Database error - " + e.getMessage());
     } catch (Exception e) {
-        System.out.println("Exception di api.salestotal.jsp: " + e.getMessage());
-        e.printStackTrace(new java.io.PrintWriter(System.out));
-        out.print("0");
+        out.print("ERROR: " + e.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (st != null) st.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            // Log error penutupan jika diperlukan
+        }
     }
 %>
