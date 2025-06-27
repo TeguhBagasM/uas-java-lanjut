@@ -56,7 +56,7 @@
                                 <td>${barang.id}</td>
                                 <td><span id="nama${barang.id}">${barang.nama}</span></td>
                                 <td>${barang.jenis}</td>
-                                <td><fmt:formatNumber type="number" pattern="0,000" value="${barang.harga}" /></td>
+                                <td>Rp. <fmt:formatNumber type="number" pattern="0,000" value="${barang.harga}" /></td>
                                 <td>
                                     <button type="button" onclick="gantiNama('${barang.id}', '${barang.nama}')" class="btn btn-primary">
                                         <i class="fas fa-edit"></i> Edit Nama
