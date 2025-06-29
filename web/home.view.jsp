@@ -4,13 +4,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-    // Get statistics from database
     int totalUsers = Helper.getTotalUsers();
     int totalBarang = Helper.getTotalBarang();
     int totalTransaksi = Helper.getTotalTransaksi();
     double totalPenjualan = Helper.getTotalPenjualan();
     
-    // Set attributes for JSP
     request.setAttribute("totalUsers", totalUsers);
     request.setAttribute("totalBarang", totalBarang);
     request.setAttribute("totalTransaksi", totalTransaksi);
